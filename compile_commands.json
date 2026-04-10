@@ -1,0 +1,13 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++17",
+      "-c",
+      "-I/home/sgo/SFML-3.0.2/include",
+      "main.cpp"
+    ],
+    "directory": "/home/sgo/sfmlProj",
+    "file": "/home/sgo/sfmlProj/main.cpp"
+  }
+]

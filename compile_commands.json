@@ -4,10 +4,10 @@
       "/usr/bin/g++",
       "-std=c++17",
       "-c",
-      "-I/home/sgo/SFML-3.0.2/include",
+      "-I/home/bomsai/SFML-3.0.2/include",
       "main.cpp"
     ],
-    "directory": "/home/sgo/sfmlProj",
-    "file": "/home/sgo/sfmlProj/main.cpp"
+    "directory": "/home/bomsai/Projects/sfmlProj",
+    "file": "/home/bomsai/Projects/sfmlProj/main.cpp"
   }
 ]

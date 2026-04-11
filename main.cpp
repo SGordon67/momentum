@@ -1,23 +1,46 @@
-#include "SFML/Graphics/RenderWindow.hpp"
-#include "SFML/System/Vector2.hpp"
-#include "SFML/Window/Keyboard.hpp"
-#include "SFML/Window/Mouse.hpp"
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Vector2.hpp>
+#include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/Mouse.hpp>
+#include <iostream>
 
 #include "enums.h"
+#include "MainMenu.h"
 
 // GLOBALS
+// functional
 const float FixedDeltaTime = 1.0f / 60.0f;
-sf::Vector2i windowPos{1930, 10};
+
+// styles
+extern sf::Font testFont;
+
+// window
+sf::Vector2i windowPos{10, 10};
 sf::Vector2u windowSize{1440, 900};
+
+// world
+sf::Vector2i worldSize{4096, 4096};
+
+// playerView
+sf::Vector2f viewSize{static_cast<float>(windowSize.x), static_cast<float>(windowSize.y)};
 
 GameState gameState = GameState::MainMenu;
 
+void initializeTextures()
+{
+    if (!testFont.openFromFile("Fonts/Nasa21-l23X.ttf")) {
+        std::cout << "Font not loaded :(" << std::endl;
+    }
+}
 int main()
 {
+    initializeTextures();
+
     // window
     sf::RenderWindow window(sf::VideoMode(
-                {windowSize.x, windowSize.y}), "momentum");
-            // sf::Style::Titlebar | sf::Style::Close);
+                {windowSize.x, windowSize.y}), "momentum",
+            sf::Style::Titlebar | sf::Style::Close);
     window.setVerticalSyncEnabled(true);
     window.setPosition(windowPos);
 
@@ -26,6 +49,8 @@ int main()
             {static_cast<float>(windowSize.x), static_cast<float>(windowSize.y)});
     uiView.setViewport(sf::FloatRect({0.f, 0.f}, {1.f, 1.f}));
     window.setView(uiView);
+
+    MainMenu mainMenu;
 
     // time
     sf::Clock clock;
@@ -72,6 +97,7 @@ int main()
         switch(gameState)
         {
             case GameState::MainMenu:
+                mainMenu.update(sf::Mouse::getPosition(window));
                 break;
             case GameState::Settings:
                 break;
@@ -87,6 +113,7 @@ int main()
         switch(gameState)
         {
             case GameState::MainMenu:
+                mainMenu.render(window);
                 break;
             case GameState::Settings:
                 break;

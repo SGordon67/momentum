@@ -7,10 +7,13 @@
 class MenuLabel{
 private:
     sf::Text m_text;
-    sf::Vector2f m_position;
+    sf::Color m_txColor;
+
+    const float m_txSizeFraction;
 
 public:
-    MenuLabel(sf::Font font);
+    MenuLabel(const sf::Font& font, std::string str, sf::Color txColor, float txSize);
+    sf::Text getText();
     void setString(std::string str);
     void setFillColor(sf::Color color);
     void updateLayout(sf::Vector2u windowSize);

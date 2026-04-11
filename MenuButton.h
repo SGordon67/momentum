@@ -9,11 +9,25 @@ private:
     sf::Text m_text;
     sf::RectangleShape m_buttonBox;
 
+    const sf::Vector2f m_buttonSizeFraction;
+    float m_marginY; // space between text and box
+
+    sf::Color m_bgColor;
+    sf::Color m_hvbgColor;
+    sf::Color m_txColor;
+    sf::Color m_hvtxColor;
+    sf::Color m_olColor;
+
+
 public:
-    MenuButton(sf::Font font);
-    void update(sf::Vector2i mousePos);
+    MenuButton(const sf::Font& font, std::string str, sf::Vector2f buttonSizeFraction, float marginY,
+               sf::Color bgColor, sf::Color hvbgColor, sf::Color txColor, sf::Color hvtxColor, sf::Color olColor);
+    sf::Text getText();
+    sf::RectangleShape getButton();
+    bool isHovered(sf::Vector2i mousePos) const;
     void handleHover(sf::Vector2i mousePos);
-    void updateLayout(sf::Vector2u windowSize);
+    void update(sf::Vector2i mousePos);
+    void updateLayout(sf::Vector2u windowSize, float buttonXposFraction, float buttonYposFraction);
     void render(sf::RenderWindow &window);
 };
 

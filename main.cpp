@@ -13,7 +13,7 @@
 const float FixedDeltaTime = 1.0f / 60.0f;
 
 // styles
-extern sf::Font testFont;
+sf::Font testFont;
 
 // window
 sf::Vector2i windowPos{10, 10};
@@ -37,6 +37,8 @@ int main()
 {
     initializeTextures();
 
+    std::cout << "Initialized the textures" << std::endl;
+
     // window
     sf::RenderWindow window(sf::VideoMode(
                 {windowSize.x, windowSize.y}), "momentum",
@@ -50,11 +52,18 @@ int main()
     uiView.setViewport(sf::FloatRect({0.f, 0.f}, {1.f, 1.f}));
     window.setView(uiView);
 
-    MainMenu mainMenu;
+    std::cout << "Setup view, about to create Main Menu" << std::endl;
+
+    MainMenu mainMenu(testFont);
+    mainMenu.updateLayout(windowSize);
+
+    std::cout << "Create Main Menu" << std::endl;
 
     // time
     sf::Clock clock;
     float timeAccumulator = 0.0f;
+
+    std::cout << "About to enter main loop" << std::endl;
 
     while (window.isOpen())
     {
@@ -75,15 +84,27 @@ int main()
                     switch(gameState)
                     {
                         case GameState::MainMenu:
-                            break;
+                            {
+                                int res = mainMenu.select(mousePos);
+                                std::cout << "Selection made on the main menu: " << res << std::endl;
+                                break;
+                            }
                         case GameState::Settings:
-                            break;
+                            {
+                                break;
+                            }
                         case GameState::Playing:
-                            break;
+                            {
+                                break;
+                            }
                         case GameState::Paused:
-                            break;
+                            {
+                                break;
+                            }
                         case GameState::GameOver:
-                            break;
+                            {
+                                break;
+                            }
                     }
                 }
             }

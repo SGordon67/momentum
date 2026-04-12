@@ -1,7 +1,6 @@
 #ifndef ENUMS_H
 #define ENUMS_H
 
-#include <string>
 enum class GameState
 {
     MainMenu,
@@ -17,12 +16,6 @@ enum class RenderLayer
 	CloseBackground,
 	Main,
 	Foreground
-};
-
-enum class ShapeType
-{
-	Circle,
-	Rectangle
 };
 
 enum class Button

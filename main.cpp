@@ -5,6 +5,7 @@
 #include <SFML/Window/Mouse.hpp>
 #include <iostream>
 
+#include "InputSystem.h"
 #include "enums.h"
 #include "MainMenu.h"
 
@@ -33,11 +34,11 @@ void initializeTextures()
         std::cout << "Font not loaded :(" << std::endl;
     }
 }
+
 int main()
 {
     initializeTextures();
-
-    std::cout << "Initialized the textures" << std::endl;
+    InputSystem inputSystem = InputSystem();
 
     // window
     sf::RenderWindow window(sf::VideoMode(
@@ -52,18 +53,12 @@ int main()
     uiView.setViewport(sf::FloatRect({0.f, 0.f}, {1.f, 1.f}));
     window.setView(uiView);
 
-    std::cout << "Setup view, about to create Main Menu" << std::endl;
-
     MainMenu mainMenu(testFont);
     mainMenu.updateLayout(windowSize);
-
-    std::cout << "Create Main Menu" << std::endl;
 
     // time
     sf::Clock clock;
     float timeAccumulator = 0.0f;
-
-    std::cout << "About to enter main loop" << std::endl;
 
     while (window.isOpen())
     {
@@ -71,6 +66,8 @@ int main()
         if (frameTime > 0.25)
             frameTime = 0.25;
         timeAccumulator += frameTime;
+
+        inputSystem.updateButtonPresses();
 
         // event handling
         while (const std::optional event = window.pollEvent())
@@ -80,13 +77,23 @@ int main()
                 if (mouseButton->button == sf::Mouse::Button::Left)
                 {
                     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-
                     switch(gameState)
                     {
                         case GameState::MainMenu:
                             {
-                                int res = mainMenu.select(mousePos);
+                                int res = mainMenu.click(mousePos);
                                 std::cout << "Selection made on the main menu: " << res << std::endl;
+                                switch(res){
+                                    case -1:
+                                        break;
+                                    case 0:
+                                        break;
+                                    case 1:
+                                        break;
+                                    case 2:
+                                        window.close();
+                                        break;
+                                }
                                 break;
                             }
                         case GameState::Settings:
@@ -118,7 +125,20 @@ int main()
         switch(gameState)
         {
             case GameState::MainMenu:
-                mainMenu.update(sf::Mouse::getPosition(window));
+                mainMenu.updateLayout(windowSize); // to be removed
+                mainMenu.update(sf::Mouse::getPosition(window), inputSystem);
+                if(inputSystem.isPressed(Button::Interact)){
+                    std::cout << "Selection made on the main menu: " << mainMenu.getSelection() << std::endl;
+                    switch(mainMenu.getSelection()){
+                        case 0:
+                            break;
+                        case 1:
+                            break;
+                        case 2:
+                            window.close();
+                            break;
+                    }
+                }
                 break;
             case GameState::Settings:
                 break;

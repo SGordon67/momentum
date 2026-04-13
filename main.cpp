@@ -29,7 +29,8 @@ sf::Vector2f viewSize{static_cast<float>(windowSize.x), static_cast<float>(windo
 GameState gameState = GameState::MainMenu;
 
 void initializeTextures(){
-    if (!testFont.openFromFile("Fonts/Nasa21-l23X.ttf")){
+    // if (!testFont.openFromFile("Fonts/Tanklager-Kompakt.ttf")){
+    if (!testFont.openFromFile("Fonts/Tanklager-Original.ttf")){
         std::cout << "Font not loaded :(" << std::endl;
     }
 }

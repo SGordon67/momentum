@@ -10,7 +10,7 @@ MenuButton::MenuButton(const sf::Font& font, std::string str, sf::Vector2f butto
     m_text.setString(str);
     m_text.setFillColor(m_txColor);
     m_text.setOutlineColor(m_txColor);
-    m_text.setOutlineThickness(1);
+    m_text.setOutlineThickness(0);
 
     m_buttonBox.setFillColor(m_bgColor);
     m_buttonBox.setOutlineThickness(3);
@@ -48,10 +48,22 @@ void MenuButton::updateLayout(sf::Vector2u windowSize, float buttonXposFraction,
     // positions
     m_buttonBox.setPosition({(windowSize.x * buttonXposFraction), 
         (windowSize.y * buttonYposFraction)});
+
+    // base the text position off the size of the first letter
+    int index = 3;
+    sf::Vector2f charPos = m_text.findCharacterPos(index);
+    char character = m_text.getString()[index];
+    bool isBold = m_text.getStyle();
+    sf::Glyph glyph = m_text.getFont().getGlyph(character, m_text.getCharacterSize(), isBold);
+    sf::FloatRect charBounds;
+    charBounds.position = {charPos.x + glyph.bounds.position.x, charPos.y + glyph.bounds.position.y};
+    charBounds.size = glyph.bounds.size;
+
     sf::FloatRect textBounds = m_text.getLocalBounds();
-    m_text.setOrigin({textBounds.position.x , textBounds.position.y + (textBounds.size.y / 2.f)});
-    m_text.setPosition({(windowSize.x * buttonXposFraction) + (m_buttonBox.getSize().x * m_buttonXMargin),
-        ((windowSize.y * buttonYposFraction) + (m_buttonBox.getSize().y / 2.f))});
+    m_text.setOrigin({textBounds.position.x , textBounds.position.y + (charBounds.size.y / 2.f)});
+    m_text.setPosition({(windowSize.x * buttonXposFraction) + (m_buttonBox.getSize().x * m_marginX),
+        ((windowSize.y * buttonYposFraction) + (buttonBounds.size.y * ((1.05f - m_marginY) / 2)) + (charBounds.size.y / 2.f))});
+        // position of button + margin between button and text vertically + half size of text
 }
 void MenuButton::render(sf::RenderWindow &window){
     window.draw(m_buttonBox);

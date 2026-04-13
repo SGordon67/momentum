@@ -1,5 +1,5 @@
-#include <iostream>
 #include <SFML/Window/Keyboard.hpp>
+#include <cstddef>
 
 #include "InputSystem.h"
 
@@ -23,9 +23,9 @@ void InputSystem::updateButtonPresses(){
     m_buttons[(size_t)Button::Interact] = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter);
     m_buttons[(size_t)Button::Tab] = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Tab);
 }
-bool InputSystem::isPressed(Button button) const{
+bool InputSystem::isPressed(Button button) const {
     return m_buttons[(size_t)button];
 }
-bool InputSystem::isNewlyPressed(Button button) const{
+bool InputSystem::isNewlyPressed(Button button) const {
     return (m_buttons[(size_t)button] && !m_beenPressed[(size_t)button]);
 }

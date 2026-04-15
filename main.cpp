@@ -23,10 +23,13 @@ sf::Vector2u windowSize{1440, 900};
 // world
 sf::Vector2i worldSize{4096, 4096};
 
+// game
+GameState gameState = GameState::MainMenu;
+int numObjects = 0;
+
 // playerView
 sf::Vector2f viewSize{static_cast<float>(windowSize.x), static_cast<float>(windowSize.y)};
 
-GameState gameState = GameState::MainMenu;
 
 void initializeTextures(){
     // if (!testFont.openFromFile("Fonts/Tanklager-Kompakt.ttf")){

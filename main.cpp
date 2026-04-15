@@ -35,6 +35,10 @@ void initializeTextures(){
     }
 }
 
+void StartGame(GameState& gs){
+    gs = GameState::Playing;
+}
+
 int main(){
     initializeTextures();
     InputSystem inputSystem = InputSystem();
@@ -81,6 +85,7 @@ int main(){
                                     break;
                                 }
                                 case 0:{
+                                    StartGame(gameState);
                                     break;
                                 }
                                 case 1:{

@@ -5,6 +5,7 @@
 #include <SFML/Window/Mouse.hpp>
 #include <iostream>
 
+#include "MainMenuState.h"
 #include "enums.h"
 #include "InputSystem.h"
 #include "MainMenu.h"
@@ -16,15 +17,15 @@ const float FixedDeltaTime = 1.0f / 60.0f;
 // styles
 sf::Font testFont;
 
-// window
+// window and views
 sf::Vector2i windowPos{10, 10};
 sf::Vector2u windowSize{1440, 900};
+sf::Vector2u gameViewSize{500, 500};
 
 // world
 sf::Vector2i worldSize{4096, 4096};
 
 // game
-GameState gameState = GameState::MainMenu;
 int numObjects = 0;
 
 // playerView
@@ -38,9 +39,13 @@ void initializeTextures(){
     }
 }
 
-void StartGame(GameState& gs){
-    gs = GameState::Playing;
-}
+// void StartGame(GameState& gs, sf::RenderWindow& window, sf::View& gameView){
+//     gs = GameState::Playing;
+//     window.setView(gameView);
+// }
+//
+// void ResetGame(){
+// }
 
 int main(){
     initializeTextures();
@@ -53,14 +58,22 @@ int main(){
     window.setVerticalSyncEnabled(true);
     window.setPosition(windowPos);
 
+    // game states
+    Context context;
+    context.window = &window;
+    context.font = &testFont;
+    context.input = &inputSystem;
+    std::unique_ptr<GameState> gameState = std::make_unique<MainMenuState>(context);
+
     // default view for UI components
     sf::View uiView({windowSize.x / 2.f, windowSize.y / 2.f},
                     {static_cast<float>(windowSize.x), static_cast<float>(windowSize.y)});
     uiView.setViewport(sf::FloatRect({0.f, 0.f}, {1.f, 1.f}));
     window.setView(uiView);
 
-    MainMenu mainMenu(testFont);
-    mainMenu.updateLayout(windowSize);
+    sf::View gameplayView({gameViewSize.x / 2.f, gameViewSize.y / 2.f},
+                          {static_cast<float>(gameViewSize.x), static_cast<float>(gameViewSize.y)});
+    gameplayView.setViewport(sf::FloatRect({0.f, 0.f}, {1.f, 1.f}));
 
     // time
     sf::Clock clock;
@@ -74,108 +87,14 @@ int main(){
 
         inputSystem.updateButtonPresses();
 
-        // event handling
-        while (const std::optional event = window.pollEvent()){
-            if (const auto *mouseButton = event->getIf<sf::Event::MouseButtonPressed>()){
-                if (mouseButton->button == sf::Mouse::Button::Left){
-                    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-                    switch(gameState){
-                        case GameState::MainMenu:{
-                            int res = mainMenu.click(mousePos);
-                            std::cout << "Selection made on the main menu: " << res << std::endl;
-                            switch(res){
-                                case -1:{
-                                    break;
-                                }
-                                case 0:{
-                                    StartGame(gameState);
-                                    break;
-                                }
-                                case 1:{
-                                    break;
-                                }
-                                case 2:{
-                                    window.close();
-                                    break;
-                                }
-                            }
-                            break;
-                        }
-                        case GameState::Settings:{
-                            break;
-                        }
-                        case GameState::Playing:{
-                            break;
-                        }
-                        case GameState::Paused:{
-                            break;
-                        }
-                        case GameState::GameOver:{
-                            break;
-                        }
-                    }
-                }
-            }
-            if (event->is<sf::Event::Closed>()){
-                window.close();
-            }
+        while (const std::optional<sf::Event> event = window.pollEvent()) {
+            gameState->handleEvent(*event);
         }
 
-        // update the game
-        switch(gameState){
-            case GameState::MainMenu:{
-                mainMenu.updateLayout(windowSize); // to be removed
-                mainMenu.update(sf::Mouse::getPosition(window), inputSystem);
-                if(inputSystem.isPressed(Button::Interact)){
-                    std::cout << "Selection made on the main menu: " << mainMenu.getSelection() << std::endl;
-                    switch(mainMenu.getSelection()){
-                        case 0:{
-                            break;
-                        }
-                        case 1:{
-                            break;
-                        }
-                        case 2:{
-                            window.close();
-                            break;
-                        }
-                    }
-                }
-                break;
-            }
-            case GameState::Settings:{
-                break;
-            }
-            case GameState::Playing:{
-                break;
-            }
-            case GameState::Paused:{
-                break;
-            }
-            case GameState::GameOver:{
-                break;
-            }
-        }
+        gameState->update(FixedDeltaTime);
 
-        // rendering
-        switch(gameState){
-            case GameState::MainMenu:{
-                mainMenu.render(window);
-                break;
-            }
-            case GameState::Settings:{
-                break;
-            }
-            case GameState::Playing:{
-                break;
-            }
-            case GameState::Paused:{
-                break;
-            }
-            case GameState::GameOver:{
-                break;
-            }
-        }
+        gameState->render(window);
+
         window.display();
     }
     return 0;

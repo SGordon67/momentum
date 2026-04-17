@@ -1,14 +1,14 @@
 #ifndef ENUMS_H
 #define ENUMS_H
 
-enum class GameState
-{
-    MainMenu,
-    Settings,
-    Playing,
-    Paused,
-    GameOver
-};
+// enum class GameState
+// {
+//     MainMenu,
+//     Settings,
+//     Playing,
+//     Paused,
+//     GameOver
+// };
 
 enum class RenderLayer
 {

@@ -6,7 +6,7 @@ CXXFLAGS += -I$(SFML_DIR)/include
 LDFLAGS = -L$(SFML_DIR)/lib
 LIBS = -lsfml-graphics -lsfml-window -lsfml-system
 
-OBJS = main.o InputSystem.o MainMenu.o MenuLabel.o MenuButton.o VisibleObj.o PhysicalObj.o Player.o
+OBJS = main.o InputSystem.o MainMenuState.o MainMenu.o MenuLabel.o MenuButton.o VisibleObj.o PhysicalObj.o Player.o
 all: main
 
 main: $(OBJS)
@@ -17,6 +17,9 @@ main.o: main.cpp InputSystem.h MainMenu.h MenuLabel.h MenuButton.h VisibleObj.h 
 
 InputSystem.o: InputSystem.cpp InputSystem.h enums.h
 	$(CXX) $(CXXFLAGS) -c InputSystem.cpp
+
+MainMenuState.o: MainMenuState.cpp MainMenuState.h GameState.h
+	$(CXX) $(CXXFLAGS) -c MainMenuState.cpp
 
 MainMenu.o: MainMenu.cpp MainMenu.h InputSystem.h
 	$(CXX) $(CXXFLAGS) -c MainMenu.cpp

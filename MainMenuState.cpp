@@ -1,8 +1,9 @@
 #include <iostream>
 
-#include "MainMenuState.h"
 #include "GameState.h"
+#include "MainMenuState.h"
 #include "MainMenu.h"
+#include "PlayingState.h"
 
 MainMenuState::MainMenuState(Context& context)
     : GameState(context),
@@ -18,7 +19,13 @@ void MainMenuState::makeSelection(int selection){
     std::cout << "Selection made on the main menu: " << selection << std::endl;
 
     auto& window = *context.window;
-    if(selection == 2){
+
+    if(selection == 0){
+        // play button
+        m_nextState = std::make_unique<PlayingState>(context);
+    }
+    else if(selection == 2){
+        // exit button
         window.close();
     }
 }
@@ -32,20 +39,27 @@ void MainMenuState::handleEvent(const sf::Event& event){
             makeSelection(res);
         }
     }
-    if(context.input->isPressed(Button::Escape)){
-        window.close();
-    }
-    if(context.input->isPressed(Button::Interact)){
-        makeSelection();
-    }
     if (event.is<sf::Event::Closed>()){
         window.close();
     }
 }
 
-void MainMenuState::update(float dt){
+std::unique_ptr<GameState> MainMenuState::update(float dt){
     m_mainMenu.updateLayout(context.window->getSize());
     m_mainMenu.update(sf::Mouse::getPosition(*context.window), *context.input);
+
+    if(context.input->isNewlyPressed(Button::Escape)){
+        context.window->close();
+    }
+    if(context.input->isNewlyPressed(Button::Interact)){
+        makeSelection();
+    }
+
+    if(m_nextState){
+        return std::move(m_nextState);
+    }
+
+    return nullptr;
 }
 
 void MainMenuState::render(sf::RenderWindow& window){

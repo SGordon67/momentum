@@ -1,17 +1,13 @@
-#ifndef MAINMENUSTATE_H
-#define MAINMENUSTATE_H
+#ifndef PLAYINGSTATE_H
+#define PLAYINGSTATE_H
 
 #include "GameState.h"
-#include "MainMenu.h"
 
-class MainMenuState : public GameState {
+class PlayingState : public GameState {
 private:
-    MainMenu m_mainMenu;
     std::unique_ptr<GameState> m_nextState;
 public:
-    MainMenuState(Context& context);
-    void makeSelection();
-    void makeSelection(int selection);
+    PlayingState(Context& context);
 
     void handleEvent(const sf::Event& event) override;
     std::unique_ptr<GameState> update(float dt) override;

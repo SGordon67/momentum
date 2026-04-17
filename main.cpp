@@ -6,9 +6,7 @@
 #include <iostream>
 
 #include "MainMenuState.h"
-#include "enums.h"
 #include "InputSystem.h"
-#include "MainMenu.h"
 
 // GLOBALS
 // functional
@@ -91,7 +89,12 @@ int main(){
             gameState->handleEvent(*event);
         }
 
-        gameState->update(FixedDeltaTime);
+        // update the game
+        // also potential state transition
+        auto newState = gameState->update(FixedDeltaTime);
+        if(newState){
+            gameState = std::move(newState);
+        }
 
         gameState->render(window);
 

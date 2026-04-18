@@ -4,7 +4,8 @@
 #include "InputSystem.h"
 
 MainMenu::MainMenu(const sf::Font& font)
-: m_title(font, "Momentum", m_titleTextColor, m_titlePosFraction, m_titleYSizeFraction), m_MenuButtons(), m_selection(0){
+: m_title(font, "Momentum", m_titleTextColor, m_titleYSizeFraction), m_MenuButtons(), m_selection(0){
+    m_title.setOutlineThickness(3);
     m_MenuButtons.push_back(MenuButton(font, "Play", {m_buttonWidth, m_buttonHeight}, m_buttonXMargin, m_buttonYMargin,
                                        m_buttonBgColor, m_buttonHvBgColor, m_buttonTextColor, m_buttonHvTextColor, m_buttonOlColor));
     m_MenuButtons.push_back(MenuButton(font, "Options", {m_buttonWidth, m_buttonHeight}, m_buttonXMargin, m_buttonYMargin,
@@ -50,7 +51,6 @@ void MainMenu::update(sf::Vector2i mousePos, InputSystem& inputSystem){
     }
 }
 
-// : m_title(font, "Momentum", m_titleTextColor, m_titlePosFraction, m_titleYSizeFraction), m_MenuButtons(), m_selection(0){
 void MainMenu::updateLayout(sf::Vector2u windowSize){
     m_title.updateLayout(windowSize, m_titlePosFraction.x, m_titlePosFraction.y);
     for(size_t i = 0; i < m_MenuButtons.size(); i++){

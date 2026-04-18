@@ -33,21 +33,21 @@ public:
     Dropdown(const sf::Font& font, const std::vector<std::string>& options, sf::Vector2f sizeFraction,
              sf::Color bgColor, sf::Color hvbgColor, sf::Color txColor, sf::Color hvtxColor, sf::Color olColor);
     int getSize();
-    int isOpen();
-
+    bool isOpen();
+    std::vector<sf::RectangleShape>& getBoxes();
     int getSelectedIndex() const;
     std::string getSelectedOption() const;
 
+    void toggle();
+    void close();
     void hover(int index);
     void unhover();
     bool isHovered(sf::Vector2i mousePos) const;
+    void select(int index);
 
     void handleClick(sf::Vector2i mousePos);
     void updateLayout(sf::Vector2u windowSize, float xFrac, float yFrac);
     void render(sf::RenderWindow& window);
-
-
-
 };
 
 #endif

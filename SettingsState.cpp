@@ -20,6 +20,10 @@ void SettingsState::makeSelection(int selection){
     }
     if(selection == 1){
         // back button
+        std::cout << "Selected Test" << std::endl;
+    }
+    if(selection == 2){
+        // back button
         std::cout << "Selected Back" << std::endl;
     }
 }
@@ -38,13 +42,26 @@ void SettingsState::handleEvent(const sf::Event& event){
     }
 }
 
-std::unique_ptr<GameState> SettingsState::update(float dt){
+std::unique_ptr<GameState> SettingsState::update([[maybe_unused]] float dt){
     m_settingsMenu.updateLayout(context.window->getSize());
     m_settingsMenu.update(sf::Mouse::getPosition(*context.window), *context.input);
 
     if(m_settingsMenu.shouldGoBack()){
         return std::make_unique<MainMenuState>(context);
     }
+    if(context.input->isNewlyPressed(Button::Escape)){
+        if(m_settingsMenu.inDropdown()){
+            int selectedDD = m_settingsMenu.getActiveDropdownIndex();
+            m_settingsMenu.closeDropdown(selectedDD);
+        }
+        else{
+            return std::make_unique<MainMenuState>(context);
+        }
+    }
+    if(context.input->isNewlyPressed(Button::Interact)){
+        m_settingsMenu.handleInteract();
+    }
+
     static int lastResolution = -1;
     int current = m_settingsMenu.getResolutionIndex();
 

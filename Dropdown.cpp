@@ -21,14 +21,13 @@ int Dropdown::getSize(){
     return m_optionBoxes.size();
 }
 // 0 if closed, number of options if open
-int Dropdown::isOpen(){
-    if(!m_isOpen){
-        return 0;
-    } else{
-        return m_optionBoxes.size();
-    }
+bool Dropdown::isOpen(){
+    return m_isOpen;
 }
 
+std::vector<sf::RectangleShape>& Dropdown::getBoxes(){
+    return m_optionBoxes;
+}
 int Dropdown::getSelectedIndex() const{
     return m_selectedIndex;
 }
@@ -36,20 +35,28 @@ std::string Dropdown::getSelectedOption() const{
     return m_optionTexts[m_selectedIndex].getString();
 }
 
+void Dropdown::toggle(){
+    m_isOpen = !m_isOpen;
+}
+void Dropdown::close(){
+    m_isOpen = false;
+}
 void Dropdown::hover(int index){
     // hovering the main box
-    if(index == 0){
+    if(index == -1){
         m_mainText.setFillColor(m_hvtxColor);
         m_mainBox.setFillColor(m_hvbgColor);
-        for(int i = 0; i < m_optionBoxes.size(); i++){
+        for(size_t i = 0; i < m_optionBoxes.size(); i++){
             m_optionTexts[i].setFillColor(m_txColor);
             m_optionBoxes[i].setFillColor(m_bgColor);
         }
         return;
     }
     else{
-        for(int i = 0; i < m_optionBoxes.size(); i++){
-            if(i == index){
+        for(size_t i = 0; i < m_optionBoxes.size(); i++){
+            m_mainText.setFillColor(m_txColor);
+            m_mainBox.setFillColor(m_bgColor);
+            if(static_cast<int>(i) == index){
                 m_optionTexts[i].setFillColor(m_hvtxColor);
                 m_optionBoxes[i].setFillColor(m_hvbgColor);
             }
@@ -61,7 +68,9 @@ void Dropdown::hover(int index){
     }
 }
 void Dropdown::unhover(){
-    for(int i = 0; i < m_optionBoxes.size(); i++){
+    m_mainText.setFillColor(m_txColor);
+    m_mainBox.setFillColor(m_bgColor);
+    for(size_t i = 0; i < m_optionBoxes.size(); i++){
         m_optionTexts[i].setFillColor(m_txColor);
         m_optionBoxes[i].setFillColor(m_bgColor);
     }
@@ -71,6 +80,12 @@ bool Dropdown::isHovered(sf::Vector2i mousePos) const{
         return true;
     }
     return false;
+}
+void Dropdown::select(int index){
+    if(index >= 0 && index < static_cast<int>(m_optionBoxes.size())){
+        m_selectedIndex = index;
+        m_mainText.setString(m_optionTexts[index].getString());
+    }
 }
 
 void Dropdown::handleClick(sf::Vector2i mousePos){

@@ -21,7 +21,7 @@ void PlayingState::handleEvent(const sf::Event& event){
     }
 }
 
-std::unique_ptr<GameState> PlayingState::update(float dt){
+std::unique_ptr<GameState> PlayingState::update([[maybe_unused]] float dt){
     if(context.input->isNewlyPressed(Button::Escape)){
         return std::make_unique<MainMenuState>(context);
     }

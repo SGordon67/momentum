@@ -49,7 +49,7 @@ void MainMenuState::handleEvent(const sf::Event& event){
     }
 }
 
-std::unique_ptr<GameState> MainMenuState::update(float dt){
+std::unique_ptr<GameState> MainMenuState::update([[maybe_unused]] float dt){
     m_mainMenu.updateLayout(context.window->getSize());
     m_mainMenu.update(sf::Mouse::getPosition(*context.window), *context.input);
 

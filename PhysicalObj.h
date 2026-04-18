@@ -6,7 +6,7 @@
 class PhysicalObj : VisibleObj {
 protected:
 public:
-    PhysicalObj(sf::Vector2f position, sf::Vector2i size, float rotation, RenderLayer renderLayer, sf::Texture* texture);
+    PhysicalObj(sf::Vector2f position, sf::Vector2i size, sf::Angle rotation, RenderLayer renderLayer, sf::Texture* texture);
 
     virtual void update();
     virtual void render(sf::RenderWindow& window);

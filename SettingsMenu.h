@@ -19,16 +19,16 @@ private:
     constexpr static const float m_titleYSizeFraction = 0.2f;
     constexpr static const sf::Vector2f m_titlePosFraction = {0.01f, 0.02f};
 
-    constexpr static const float m_settingItemFirstYposFraction = 0.2f;
-    constexpr static const float m_settingLabelFirstXposFraction = 0.1f;
-    constexpr static const float m_settingDropdownFirstXposFraction = 0.1f;
+    constexpr static const float m_settingItemFirstYposFraction = 0.25f;
+    constexpr static const float m_settingLabelFirstXposFraction = 0.01f;
+    constexpr static const float m_settingDropdownFirstXposFraction = 0.2f;
 
     constexpr static const float m_settingItemYposMargin = 0.015f; // space between items vertically
 
     constexpr static const float m_buttonYMargin = 0.75f; // size of text within button
     constexpr static const float m_buttonXMargin = 0.02f; // horizontal gap between side of button and text within
 
-    constexpr static const float m_settingWidth = 0.25f;
+    constexpr static const float m_settingWidth = 0.20f;
     constexpr static const float m_settingHeight = 0.06f;
     constexpr static const float m_backButtonYPosFraction = 0.85f;
 
@@ -48,13 +48,18 @@ private:
 
 public:
     SettingsMenu(const sf::Font& font);
-    int inDropdown(); // 0 if not in dropdown, or size of dropdown list
+    bool inDropdown();
+    int getDropdownSize();
+    int getActiveDropdownIndex();
     int getSelection();
     void incSelection();
     void decSelection();
     void handleClick(sf::Vector2i mousePos);
+    void handleInteract();
+    void closeDropdown(int ddIndex);
 
     int getResolutionIndex() const;
+
     bool shouldGoBack();
 
     void update(sf::Vector2i mousePos, InputSystem& inputSystem);

@@ -17,7 +17,7 @@ protected:
     sf::IntRect m_spriteRect;
     sf::Sprite m_sprite;
 public:
-    VisibleObj(sf::Vector2f position, sf::Vector2i size, float rotation, RenderLayer renderLayer, sf::Texture* texture);
+    VisibleObj(sf::Vector2f position, sf::Vector2i size, sf::Angle rotation, RenderLayer renderLayer, sf::Texture* texture);
 
     int getObjectID() const { return m_objectID; }
     RenderLayer getRenderLayer() const { return m_renderLayer; }

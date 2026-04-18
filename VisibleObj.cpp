@@ -10,7 +10,7 @@
 
 extern int numObjects;
 
-VisibleObj::VisibleObj(sf::Vector2f position, sf::Vector2i size, float rotation, RenderLayer renderLayer, sf::Texture* texture)
+VisibleObj::VisibleObj(sf::Vector2f position, sf::Vector2i size, sf::Angle rotation, RenderLayer renderLayer, sf::Texture* texture)
     : m_objectID(++numObjects)
     , m_renderLayer(renderLayer)
     , m_texture(texture)
@@ -20,8 +20,9 @@ VisibleObj::VisibleObj(sf::Vector2f position, sf::Vector2i size, float rotation,
     m_sprite.setTexture(*texture);
     m_sprite.setOrigin({size.x/2.f, size.y/2.f});
     m_sprite.setPosition(position);
+    m_sprite.setRotation(rotation);
 }
 void VisibleObj::update(){
 }
-void VisibleObj::render(sf::RenderWindow& window){
+void VisibleObj::render([[maybe_unused]] sf::RenderWindow& window){
 }

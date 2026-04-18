@@ -24,8 +24,8 @@ MainMenuState.o: MainMenuState.cpp MainMenuState.h PlayingState.h GameState.h
 MainMenu.o: MainMenu.cpp MainMenu.h InputSystem.h
 	$(CXX) $(CXXFLAGS) -c MainMenu.cpp
 
-SettingsMenuState.o: SettingsMenuState.cpp SettingsMenuState.h SettingsMenu.h GameState.h
-	$(CXX) $(CXXFLAGS) -c SettingsMenuState.cpp
+SettingsState.o: SettingsState.cpp SettingsState.h SettingsMenu.h GameState.h
+	$(CXX) $(CXXFLAGS) -c SettingsState.cpp
 
 SettingsMenu.o: SettingsMenu.cpp SettingsMenu.h InputSystem.h
 	$(CXX) $(CXXFLAGS) -c SettingsMenu.cpp

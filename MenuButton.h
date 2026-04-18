@@ -24,8 +24,8 @@ public:
                sf::Color bgColor, sf::Color hvbgColor, sf::Color txColor, sf::Color hvtxColor, sf::Color olColor);
     sf::Text getText();
     sf::RectangleShape getButton();
-    void select();
-    void unselect();
+    void hover();
+    void unhover();
     bool isHovered(sf::Vector2i mousePos) const;
     void updateLayout(sf::Vector2u windowSize, float buttonXposFraction, float buttonYposFraction);
     void render(sf::RenderWindow &window);

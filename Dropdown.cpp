@@ -1,0 +1,122 @@
+#include "Dropdown.h"
+
+Dropdown::Dropdown(const sf::Font& font, const std::vector<std::string>& options, sf::Vector2f sizeFraction,
+                   sf::Color bgColor, sf::Color hvbgColor, sf::Color txColor, sf::Color hvtxColor, sf::Color olColor)
+    : m_mainText(sf::Text(font))
+    , m_sizeFraction(sizeFraction)
+    , m_bgColor(bgColor), m_hvbgColor(hvbgColor), m_txColor(txColor), m_hvtxColor(hvtxColor), m_olColor(olColor)
+{
+    m_mainText.setString(options[0]);
+
+    for(const auto& opt : options){
+        sf::Text text(font);
+        text.setString(opt);
+        m_optionTexts.push_back(text);
+
+        sf::RectangleShape box;
+        m_optionBoxes.push_back(box);
+    }
+}
+int Dropdown::getSize(){
+    return m_optionBoxes.size();
+}
+// 0 if closed, number of options if open
+int Dropdown::isOpen(){
+    if(!m_isOpen){
+        return 0;
+    } else{
+        return m_optionBoxes.size();
+    }
+}
+
+int Dropdown::getSelectedIndex() const{
+    return m_selectedIndex;
+}
+std::string Dropdown::getSelectedOption() const{
+    return m_optionTexts[m_selectedIndex].getString();
+}
+
+void Dropdown::hover(int index){
+    // hovering the main box
+    if(index == 0){
+        m_mainText.setFillColor(m_hvtxColor);
+        m_mainBox.setFillColor(m_hvbgColor);
+        for(int i = 0; i < m_optionBoxes.size(); i++){
+            m_optionTexts[i].setFillColor(m_txColor);
+            m_optionBoxes[i].setFillColor(m_bgColor);
+        }
+        return;
+    }
+    else{
+        for(int i = 0; i < m_optionBoxes.size(); i++){
+            if(i == index){
+                m_optionTexts[i].setFillColor(m_hvtxColor);
+                m_optionBoxes[i].setFillColor(m_hvbgColor);
+            }
+            else{
+                m_optionTexts[i].setFillColor(m_txColor);
+                m_optionBoxes[i].setFillColor(m_bgColor);
+            }
+        }
+    }
+}
+void Dropdown::unhover(){
+    for(int i = 0; i < m_optionBoxes.size(); i++){
+        m_optionTexts[i].setFillColor(m_txColor);
+        m_optionBoxes[i].setFillColor(m_bgColor);
+    }
+}
+bool Dropdown::isHovered(sf::Vector2i mousePos) const{
+    if(m_mainBox.getGlobalBounds().contains((sf::Vector2f)mousePos)){
+        return true;
+    }
+    return false;
+}
+
+void Dropdown::handleClick(sf::Vector2i mousePos){
+    if(isHovered(mousePos)){
+        m_isOpen = !m_isOpen;
+        return;
+    }
+
+    if(m_isOpen){
+        for(size_t i = 0; i < m_optionBoxes.size(); i++){
+            if(m_optionBoxes[i].getGlobalBounds().contains((sf::Vector2f)mousePos)){
+                m_selectedIndex = i;
+                m_mainText.setString(m_optionTexts[i].getString());
+                m_isOpen = false;
+                return;
+            }
+        }
+        m_isOpen = false;
+    }
+}
+void Dropdown::updateLayout(sf::Vector2u windowSize, float xFrac, float yFrac){
+    sf::Vector2f size = {windowSize.x * m_sizeFraction.x, windowSize.y * m_sizeFraction.y};
+    sf::Vector2f pos = {windowSize.x * xFrac, windowSize.y * yFrac};
+
+    m_mainBox.setSize(size);
+    m_mainBox.setPosition(pos);
+
+    m_mainText.setPosition(pos);
+
+    for(size_t i = 0; i < m_optionBoxes.size(); i++){
+        sf::Vector2f optPos = pos + sf::Vector2f(0, size.y * (i + 1));
+
+        m_optionBoxes[i].setSize(size);
+        m_optionBoxes[i].setPosition(optPos);
+
+        m_optionTexts[i].setPosition(optPos);
+    }
+}
+void Dropdown::render(sf::RenderWindow& window){
+    window.draw(m_mainBox);
+    window.draw(m_mainText);
+
+    if(m_isOpen){
+        for(size_t i = 0; i < m_optionBoxes.size(); i++){
+            window.draw(m_optionBoxes[i]);
+            window.draw(m_optionTexts[i]);
+        }
+    }
+}

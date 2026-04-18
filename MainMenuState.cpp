@@ -4,6 +4,7 @@
 #include "MainMenuState.h"
 #include "MainMenu.h"
 #include "PlayingState.h"
+#include "SettingsState.h"
 
 MainMenuState::MainMenuState(Context& context)
     : GameState(context),
@@ -24,6 +25,10 @@ void MainMenuState::makeSelection(int selection){
         // play button
         m_nextState = std::make_unique<PlayingState>(context);
     }
+    if(selection == 1){
+        // settings button
+        m_nextState = std::make_unique<SettingsState>(context);
+    }
     else if(selection == 2){
         // exit button
         window.close();
@@ -35,7 +40,7 @@ void MainMenuState::handleEvent(const sf::Event& event){
     if(const auto *mouseButton = event.getIf<sf::Event::MouseButtonPressed>()){
         if (mouseButton->button == sf::Mouse::Button::Left){
             sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-            int res = m_mainMenu.click(mousePos);
+            int res = m_mainMenu.handleClick(mousePos);
             makeSelection(res);
         }
     }
@@ -63,5 +68,6 @@ std::unique_ptr<GameState> MainMenuState::update(float dt){
 }
 
 void MainMenuState::render(sf::RenderWindow& window){
+    window.clear();
     m_mainMenu.render(window);
 }

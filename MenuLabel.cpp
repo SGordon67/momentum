@@ -16,7 +16,7 @@ void MenuLabel::setString(std::string str){
 void MenuLabel::setFillColor(sf::Color color){
     m_text.setFillColor(color);
 }
-void MenuLabel::updateLayout(sf::Vector2u windowSize){
+void MenuLabel::updateLayout(sf::Vector2u windowSize, float xFrac, float yFrac){
     m_text.setCharacterSize(windowSize.y * m_txSizeFraction);
 
     sf::FloatRect textBounds = m_text.getLocalBounds();

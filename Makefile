@@ -6,7 +6,7 @@ CXXFLAGS += -I$(SFML_DIR)/include
 LDFLAGS = -L$(SFML_DIR)/lib
 LIBS = -lsfml-graphics -lsfml-window -lsfml-system
 
-OBJS = main.o InputSystem.o MainMenuState.o MainMenu.o PlayingState.o MenuLabel.o MenuButton.o VisibleObj.o PhysicalObj.o Player.o
+OBJS = main.o InputSystem.o MainMenuState.o MainMenu.o SettingsState.o SettingsMenu.o PlayingState.o MenuLabel.o MenuButton.o Dropdown.o VisibleObj.o PhysicalObj.o Player.o
 all: main
 
 main: $(OBJS)
@@ -24,6 +24,12 @@ MainMenuState.o: MainMenuState.cpp MainMenuState.h PlayingState.h GameState.h
 MainMenu.o: MainMenu.cpp MainMenu.h InputSystem.h
 	$(CXX) $(CXXFLAGS) -c MainMenu.cpp
 
+SettingsMenuState.o: SettingsMenuState.cpp SettingsMenuState.h SettingsMenu.h GameState.h
+	$(CXX) $(CXXFLAGS) -c SettingsMenuState.cpp
+
+SettingsMenu.o: SettingsMenu.cpp SettingsMenu.h InputSystem.h
+	$(CXX) $(CXXFLAGS) -c SettingsMenu.cpp
+
 PlayingState.o: PlayingState.cpp PlayingState.h MainMenuState.h GameState.h
 	$(CXX) $(CXXFLAGS) -c PlayingState.cpp
 
@@ -32,6 +38,9 @@ MenuLabel.o: MenuLabel.cpp MenuLabel.h MainMenu.h
 
 MenuButton.o: MenuButton.cpp MenuButton.h MainMenu.h
 	$(CXX) $(CXXFLAGS) -c MenuButton.cpp
+
+Dropdown.o: Dropdown.cpp Dropdown.h MainMenu.h
+	$(CXX) $(CXXFLAGS) -c Dropdown.cpp
 
 VisibleObj.o: VisibleObj.cpp VisibleObj.h enums.h
 	$(CXX) $(CXXFLAGS) -c VisibleObj.cpp

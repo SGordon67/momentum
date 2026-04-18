@@ -23,7 +23,7 @@ void MainMenu::decSelection(){
     m_selection--;
     if(m_selection < 0) m_selection = m_MenuButtons.size()-1;
 }
-int MainMenu::click(sf::Vector2i mousePos){
+int MainMenu::handleClick(sf::Vector2i mousePos){
     for(size_t i = 0; i < m_MenuButtons.size(); i++){
         if(m_MenuButtons[i].isHovered(mousePos)) return i;
     }
@@ -45,12 +45,14 @@ void MainMenu::update(sf::Vector2i mousePos, InputSystem& inputSystem){
     // update the selected button/deselect others
     for(size_t i = 0; i < m_MenuButtons.size(); i++){
         if(static_cast<int>(i) == m_selection){
-            m_MenuButtons[i].select();
-        } else m_MenuButtons[i].unselect();
+            m_MenuButtons[i].hover();
+        } else m_MenuButtons[i].unhover();
     }
 }
+
+// : m_title(font, "Momentum", m_titleTextColor, m_titlePosFraction, m_titleYSizeFraction), m_MenuButtons(), m_selection(0){
 void MainMenu::updateLayout(sf::Vector2u windowSize){
-    m_title.updateLayout(windowSize);
+    m_title.updateLayout(windowSize, m_titlePosFraction.x, m_titlePosFraction.y);
     for(size_t i = 0; i < m_MenuButtons.size(); i++){
         m_MenuButtons[i].updateLayout(windowSize, m_buttonXposFraction, m_buttonYposFraction + (i * (m_buttonYposMargin + m_buttonHeight)));
     }
@@ -58,7 +60,7 @@ void MainMenu::updateLayout(sf::Vector2u windowSize){
 void MainMenu::render(sf::RenderWindow &window){
     m_title.render(window);
     for(size_t i = 0; i < m_MenuButtons.size(); i++){
-        if(m_selection == static_cast<int>(i)) m_MenuButtons[i].select();
+        if(m_selection == static_cast<int>(i)) m_MenuButtons[i].hover();
         m_MenuButtons[i].render(window);
     }
 }

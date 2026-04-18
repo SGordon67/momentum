@@ -17,7 +17,7 @@ public:
     sf::Text getText();
     void setString(std::string str);
     void setFillColor(sf::Color color);
-    void updateLayout(sf::Vector2u windowSize);
+    void updateLayout(sf::Vector2u windowSize, float xFrac, float yFrac);
     void render(sf::RenderWindow &window);
 };
 

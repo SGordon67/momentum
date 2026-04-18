@@ -28,11 +28,11 @@ sf::Text MenuButton::getText(){
 sf::RectangleShape MenuButton::getButton(){
     return m_buttonBox;
 }
-void MenuButton::select(){
+void MenuButton::hover(){
     m_text.setFillColor(m_hvtxColor);
     m_buttonBox.setFillColor(m_hvbgColor);
 }
-void MenuButton::unselect(){
+void MenuButton::unhover(){
     m_text.setFillColor(m_txColor);
     m_buttonBox.setFillColor(m_bgColor);
 }

@@ -29,21 +29,12 @@ int numObjects = 0;
 // playerView
 sf::Vector2f viewSize{static_cast<float>(windowSize.x), static_cast<float>(windowSize.y)};
 
-
 void initializeTextures(){
     // if (!testFont.openFromFile("Fonts/Tanklager-Kompakt.ttf")){
     if (!testFont.openFromFile("Fonts/Tanklager-Original.ttf")){
         std::cout << "Font not loaded :(" << std::endl;
     }
 }
-
-// void StartGame(GameState& gs, sf::RenderWindow& window, sf::View& gameView){
-//     gs = GameState::Playing;
-//     window.setView(gameView);
-// }
-//
-// void ResetGame(){
-// }
 
 int main(){
     initializeTextures();

@@ -1,6 +1,7 @@
 #include "MenuButton.h"
-#include "MainMenu.h"
 #include "SFML/Graphics/Font.hpp"
+
+extern void centerTextInBox(sf::Text& text, const sf::RectangleShape& box, float xMargin, float yMargin);
 
 MenuButton::MenuButton(const sf::Font& font, std::string str, sf::Vector2f buttonSizeFraction, float marginX, float marginY,
                        sf::Color bgColor, sf::Color hvbgColor, sf::Color txColor, sf::Color hvtxColor, sf::Color olColor)
@@ -40,30 +41,20 @@ bool MenuButton::isHovered(sf::Vector2i mousePos) const {
     return m_buttonBox.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos));
 }
 void MenuButton::updateLayout(sf::Vector2u windowSize, float buttonXposFraction, float buttonYposFraction){
-    // sizes
-    m_buttonBox.setSize({(windowSize.x * m_buttonSizeFraction.x), (windowSize.y * m_buttonSizeFraction.y)});
-    sf::FloatRect buttonBounds = m_buttonBox.getLocalBounds();
-    m_text.setCharacterSize(buttonBounds.size.y * m_marginY);
+    sf::Vector2f size = {
+        windowSize.x * m_buttonSizeFraction.x,
+        windowSize.y * m_buttonSizeFraction.y
+    };
 
-    // positions
-    m_buttonBox.setPosition({(windowSize.x * buttonXposFraction), 
-        (windowSize.y * buttonYposFraction)});
+    sf::Vector2f pos = {
+        windowSize.x * buttonXposFraction,
+        windowSize.y * buttonYposFraction
+    };
 
-    // base the text position off the size of the first letter
-    int index = 3;
-    sf::Vector2f charPos = m_text.findCharacterPos(index);
-    char character = m_text.getString()[index];
-    bool isBold = m_text.getStyle();
-    sf::Glyph glyph = m_text.getFont().getGlyph(character, m_text.getCharacterSize(), isBold);
-    sf::FloatRect charBounds;
-    charBounds.position = {charPos.x + glyph.bounds.position.x, charPos.y + glyph.bounds.position.y};
-    charBounds.size = glyph.bounds.size;
+    m_buttonBox.setSize(size);
+    m_buttonBox.setPosition(pos);
 
-    sf::FloatRect textBounds = m_text.getLocalBounds();
-    m_text.setOrigin({textBounds.position.x , textBounds.position.y + (charBounds.size.y / 2.f)});
-    m_text.setPosition({(windowSize.x * buttonXposFraction) + (m_buttonBox.getSize().x * m_marginX),
-        ((windowSize.y * buttonYposFraction) + (buttonBounds.size.y * ((1.05f - m_marginY) / 2)) + (charBounds.size.y / 2.f))});
-        // position of button + margin between button and text vertically + half size of text
+    centerTextInBox(m_text, m_buttonBox, m_marginX, m_marginY);
 }
 void MenuButton::render(sf::RenderWindow &window){
     window.draw(m_buttonBox);

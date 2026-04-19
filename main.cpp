@@ -36,6 +36,29 @@ void initializeTextures(){
     }
 }
 
+void centerTextInBox(sf::Text& text, const sf::RectangleShape& box, float xMargin, float yMargin){
+    sf::FloatRect boxBounds = box.getLocalBounds();
+    text.setCharacterSize(boxBounds.size.y * yMargin);
+
+    // int index = std::min(3, static_cast<int>(text.getString().getSize() - 1));
+    int index = 0;
+    sf::Vector2f charPos = text.findCharacterPos(index);
+    char character = text.getString()[index];
+    bool isBold = text.getStyle();
+    sf::Glyph glyph = text.getFont().getGlyph(character, text.getCharacterSize(), isBold);
+
+    sf::FloatRect charBounds;
+    charBounds.position = { charPos.x + glyph.bounds.position.x, charPos.y + glyph.bounds.position.y };
+    charBounds.size = glyph.bounds.size;
+
+    sf::FloatRect textBounds = text.getLocalBounds();
+
+    text.setOrigin({ textBounds.position.x, textBounds.position.y + (charBounds.size.y / 2.f)});
+    text.setPosition({ box.getPosition().x + (box.getSize().x * xMargin),
+        box.getPosition().y + (boxBounds.size.y * ((1.1f - yMargin) / 2.f)) + (charBounds.size.y / 2.f)});
+    // the 1.1 is to custom offset to look better visually, played with that num a bit
+}
+
 int main(){
     initializeTextures();
     InputSystem inputSystem = InputSystem();

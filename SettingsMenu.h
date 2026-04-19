@@ -16,21 +16,26 @@ struct SettingItem {
 class SettingsMenu{
 private:
     // all values are fractions of the window size to properly scale
+
+    // sizes
     constexpr static const float m_titleYSizeFraction = 0.2f;
+    constexpr static const float m_settingWidth = 0.20f; // the button
+    constexpr static const float m_settingHeight = 0.06f; // the button and label
+
+    // positions
     constexpr static const sf::Vector2f m_titlePosFraction = {0.01f, 0.02f};
 
     constexpr static const float m_settingItemFirstYposFraction = 0.25f;
     constexpr static const float m_settingLabelFirstXposFraction = 0.01f;
-    constexpr static const float m_settingDropdownFirstXposFraction = 0.2f;
+    constexpr static const float m_settingDropdownFirstXposFraction = 0.99 - m_settingWidth;
 
     constexpr static const float m_settingItemYposMargin = 0.015f; // space between items vertically
 
     constexpr static const float m_buttonYMargin = 0.75f; // size of text within button
     constexpr static const float m_buttonXMargin = 0.02f; // horizontal gap between side of button and text within
 
-    constexpr static const float m_settingWidth = 0.20f;
-    constexpr static const float m_settingHeight = 0.06f;
-    constexpr static const float m_backButtonYPosFraction = 0.85f;
+    // constexpr static const sf::Vector2f m_backButtonPosFraction = {m_settingDropdownFirstXposFraction, 0.85f};
+    constexpr static const sf::Vector2f m_backButtonPosFraction = {m_settingLabelFirstXposFraction, 0.85f};
 
     constexpr static const sf::Color m_titleTextColor = sf::Color(0x1B6629ff);
     constexpr static const sf::Color m_buttonTextColor = sf::Color(0x1B6629ff);

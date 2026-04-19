@@ -13,13 +13,11 @@ SettingsMenu::SettingsMenu(const sf::Font& font, int resolutionIndex, int testIn
         "1024x900",
         "900x900"
     };
-    // m_settingsItems[i].label.updateLayout(windowSize, m_settingLabelFirstXposFraction,
-    //                                       m_settingItemFirstYposFraction + (i * (m_settingItemYposMargin + m_settingHeight)));
     // keeping note above for future settigns labels (need to add offset not included in the first setting
     SettingItem resolutionItem = {
         MenuLabel(font, "Resolution", m_buttonTextColor, m_settingHeight),
-        Dropdown(font, resolutions, {m_settingWidth, m_settingHeight}
-                 ,m_buttonBgColor, m_buttonHvBgColor, m_buttonTextColor, m_buttonHvTextColor, m_buttonOlColor,
+        Dropdown(font, resolutions, {m_settingWidth, m_settingHeight}, m_buttonXMargin, m_buttonYMargin,
+                 m_buttonBgColor, m_buttonHvBgColor, m_buttonTextColor, m_buttonHvTextColor, m_buttonOlColor,
                  resolutionIndex)
     };
     resolutionItem.dropdown.setSelectedIndex(resolutionIndex);
@@ -33,9 +31,9 @@ SettingsMenu::SettingsMenu(const sf::Font& font, int resolutionIndex, int testIn
     };
     SettingItem testItem = {
         MenuLabel(font, "Testing", m_buttonTextColor, m_settingHeight),
-        Dropdown(font, testers, {m_settingWidth, m_settingHeight}
-                 , m_buttonBgColor, m_buttonHvBgColor, m_buttonTextColor, m_buttonHvTextColor, m_buttonOlColor
-                 , testIndex)
+        Dropdown(font, testers, {m_settingWidth, m_settingHeight}, m_buttonXMargin, m_buttonYMargin,
+                 m_buttonBgColor, m_buttonHvBgColor, m_buttonTextColor, m_buttonHvTextColor, m_buttonOlColor,
+                 testIndex)
     };
     testItem.dropdown.setSelectedIndex(testIndex);
     m_settingsItems.push_back(testItem);
@@ -86,7 +84,7 @@ void SettingsMenu::incSelection(){
             m_selection = 0;
         }
     }
-    std::cout << "Current Selection Index: " << m_selection << std::endl;
+    // std::cout << "Current Selection Index: " << m_selection << std::endl;
 }
 void SettingsMenu::decSelection(){
     m_selection--;
@@ -102,7 +100,7 @@ void SettingsMenu::decSelection(){
             m_selection = static_cast<int>(m_settingsItems[selectedDD].dropdown.getSize()) - 1;
         }
     }
-    std::cout << "Current Selection Index: " << m_selection << std::endl;
+    // std::cout << "Current Selection Index: " << m_selection << std::endl;
 }
 
 void SettingsMenu::handleClick(sf::Vector2i mousePos){
@@ -215,7 +213,8 @@ void SettingsMenu::updateLayout(sf::Vector2u windowSize){
         m_settingsItems[i].dropdown.updateLayout(windowSize, m_settingDropdownFirstXposFraction, 
                                                  m_settingItemFirstYposFraction + (i * (m_settingItemYposMargin + m_settingHeight)));
     }
-    m_backButton.updateLayout(windowSize, m_settingDropdownFirstXposFraction, m_backButtonYPosFraction);
+    // m_backButton.updateLayout(windowSize, m_settingDropdownFirstXposFraction, m_backButtonYPosFraction);
+    m_backButton.updateLayout(windowSize, m_backButtonPosFraction.x, m_backButtonPosFraction.y);
 }
 void SettingsMenu::render(sf::RenderWindow &window){
     m_title.render(window);

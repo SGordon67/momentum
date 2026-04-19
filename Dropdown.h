@@ -22,6 +22,8 @@ private:
     int m_selectedIndex = 0;
 
     sf::Vector2f m_sizeFraction;
+    float m_buttonYMargin;
+    float m_buttonXMargin;
 
     sf::Color m_bgColor;
     sf::Color m_hvbgColor;
@@ -29,8 +31,9 @@ private:
     sf::Color m_hvtxColor;
     sf::Color m_olColor;
 
+    // constexpr static const float m_buttonYMargin = 0.75f; // size of text within button
 public:
-    Dropdown(const sf::Font& font, const std::vector<std::string>& options, sf::Vector2f sizeFraction,
+    Dropdown(const sf::Font& font, const std::vector<std::string>& options, sf::Vector2f sizeFraction, float buttonXMargin, float buttonYMargin,
              sf::Color bgColor, sf::Color hvbgColor, sf::Color txColor, sf::Color hvtxColor, sf::Color olColor,
              int selectedIndex);
     int getSize();

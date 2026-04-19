@@ -17,7 +17,7 @@ void MainMenuState::makeSelection(){
     makeSelection(res);
 }
 void MainMenuState::makeSelection(int selection){
-    std::cout << "Selection made on the main menu: " << selection << std::endl;
+    // std::cout << "Selection made on the main menu: " << selection << std::endl;
 
     auto& window = *context.window;
 

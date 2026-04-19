@@ -1,10 +1,15 @@
 #include "Dropdown.h"
+#include "SFML/Graphics/Font.hpp"
+#include "SFML/Graphics/Glyph.hpp"
 
-Dropdown::Dropdown(const sf::Font& font, const std::vector<std::string>& options, sf::Vector2f sizeFraction,
+extern void centerTextInBox(sf::Text& text, const sf::RectangleShape& box, float xMargin, float yMargin);
+
+Dropdown::Dropdown(const sf::Font& font, const std::vector<std::string>& options, sf::Vector2f sizeFraction, float buttonXMargin, float buttonYMargin,
                    sf::Color bgColor, sf::Color hvbgColor, sf::Color txColor, sf::Color hvtxColor, sf::Color olColor,
                    int selectedIndex)
     : m_mainText(sf::Text(font))
     , m_sizeFraction(sizeFraction)
+    , m_buttonYMargin(buttonYMargin)
     , m_bgColor(bgColor), m_hvbgColor(hvbgColor), m_txColor(txColor), m_hvtxColor(hvtxColor), m_olColor(olColor)
 {
     m_mainText.setString(options[0]);
@@ -116,23 +121,23 @@ void Dropdown::handleClick(sf::Vector2i mousePos){
     }
 }
 void Dropdown::updateLayout(sf::Vector2u windowSize, float xFrac, float yFrac){
-    sf::Vector2f size = {windowSize.x * m_sizeFraction.x, windowSize.y * m_sizeFraction.y};
-    sf::Vector2f pos = {windowSize.x * xFrac, windowSize.y * yFrac};
+    sf::Vector2f size = { windowSize.x * m_sizeFraction.x, windowSize.y * m_sizeFraction.y};
+    sf::Vector2f pos = { windowSize.x * xFrac, windowSize.y * yFrac};
 
+    // mainbox
     m_mainBox.setSize(size);
     m_mainBox.setPosition(pos);
+    centerTextInBox(m_mainText, m_mainBox, m_buttonXMargin, m_buttonYMargin);
 
-    m_mainText.setPosition(pos);
-
+    // options
     for(size_t i = 0; i < m_optionBoxes.size(); i++){
         sf::Vector2f optPos = pos + sf::Vector2f(0, size.y * (i + 1));
-
         m_optionBoxes[i].setSize(size);
         m_optionBoxes[i].setPosition(optPos);
-
-        m_optionTexts[i].setPosition(optPos);
+        centerTextInBox(m_optionTexts[i], m_optionBoxes[i], m_buttonXMargin, m_buttonYMargin);
     }
 }
+
 void Dropdown::render(sf::RenderWindow& window){
     window.draw(m_mainBox);
     window.draw(m_mainText);

@@ -66,6 +66,9 @@ int SettingsMenu::getActiveDropdownIndex(){
     // return -1 if not in a dropdown
     return -1;
 }
+void SettingsMenu::setSelection(int selection){
+    m_selection = selection;
+}
 int SettingsMenu::getSelection(){
     return m_selection;
 }
@@ -134,12 +137,13 @@ void SettingsMenu::handleInteract(){
 
         m_settingsItems[selectedDD].dropdown.select(m_selection);
         m_settingsItems[selectedDD].dropdown.close();
-        m_selection = 0;
+        m_selection = selectedDD;
     }
 }
 void SettingsMenu::closeDropdown(int ddIndex){
     if(!inDropdown()) return;
     m_settingsItems[ddIndex].dropdown.close();
+    m_selection = ddIndex;
 }
 
 int SettingsMenu::getResolutionIndex() const{

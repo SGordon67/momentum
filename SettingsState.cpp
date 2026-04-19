@@ -63,6 +63,7 @@ std::unique_ptr<GameState> SettingsState::update([[maybe_unused]] float dt){
         if(m_settingsMenu.inDropdown()){
             int selectedDD = m_settingsMenu.getActiveDropdownIndex();
             m_settingsMenu.closeDropdown(selectedDD);
+            m_settingsMenu.setSelection(selectedDD);
         }
         else{
             return std::make_unique<MainMenuState>(context);

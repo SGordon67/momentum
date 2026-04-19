@@ -52,6 +52,7 @@ public:
     int getDropdownSize();
     int getActiveDropdownIndex();
     int getSelection();
+    void setSelection(int selection);
     void incSelection();
     void decSelection();
     void handleClick(sf::Vector2i mousePos);

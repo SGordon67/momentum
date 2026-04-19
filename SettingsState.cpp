@@ -1,10 +1,11 @@
 #include "SettingsState.h"
 #include "MainMenuState.h"
+#include "SFML/System/Vector2.hpp"
 #include <iostream>
 
 SettingsState::SettingsState(Context& context)
     : GameState(context)
-    , m_settingsMenu(*context.font)
+    , m_settingsMenu(*context.font, context.resolutionIndex, context.testIndex)
 {
 }
 void SettingsState::makeSelection(){
@@ -25,6 +26,15 @@ void SettingsState::makeSelection(int selection){
     if(selection == 2){
         // back button
         std::cout << "Selected Back" << std::endl;
+    }
+}
+sf::Vector2u SettingsState::getResolutionFromIndex(int index) {
+    switch(index) {
+        case 0: return {1920, 1080};
+        case 1: return {1440, 900};
+        case 2: return {1024, 900};
+        case 3: return {900, 900};
+        default: return {1440, 900};
     }
 }
 
@@ -62,17 +72,32 @@ std::unique_ptr<GameState> SettingsState::update([[maybe_unused]] float dt){
         m_settingsMenu.handleInteract();
     }
 
-    static int lastResolution = -1;
+    // update settings in context
+    context.testIndex = m_settingsMenu.getTestIndex();
+
+    // update the resolution, create new window if needed
     int current = m_settingsMenu.getResolutionIndex();
+    if(current != m_lastResolution){
+        m_lastResolution = current;
+        context.resolutionIndex = current;
+        sf::Vector2u newSize = getResolutionFromIndex(current);
+        auto& window = *context.window;
 
-    if(current != lastResolution){
-        lastResolution = current;
+        window.create(
+            sf::VideoMode({newSize.x, newSize.y}),
+            "momentum",
+            sf::Style::Titlebar | sf::Style::Close
+        );
+        window.setPosition({10, 10});
+        window.setVerticalSyncEnabled(true);
 
-        std::cout << "Resolution changed to index: " << current << std::endl;
-
-        // TODO: resize the window
+        sf::View uiView(
+            {newSize.x / 2.f, newSize.y / 2.f},
+            {static_cast<float>(newSize.x), static_cast<float>(newSize.y)}
+        );
+        window.setView(uiView);
+        m_settingsMenu.updateLayout(window.getSize());
     }
-
     return nullptr;
 }
 

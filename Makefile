@@ -18,19 +18,19 @@ main.o: main.cpp InputSystem.h MainMenu.h MenuLabel.h MenuButton.h VisibleObj.h 
 InputSystem.o: InputSystem.cpp InputSystem.h enums.h
 	$(CXX) $(CXXFLAGS) -c InputSystem.cpp
 
-MainMenuState.o: MainMenuState.cpp MainMenuState.h PlayingState.h GameState.h
+MainMenuState.o: MainMenuState.cpp MainMenuState.h PlayingState.h GameState.h Context.h
 	$(CXX) $(CXXFLAGS) -c MainMenuState.cpp
 
 MainMenu.o: MainMenu.cpp MainMenu.h InputSystem.h
 	$(CXX) $(CXXFLAGS) -c MainMenu.cpp
 
-SettingsState.o: SettingsState.cpp SettingsState.h SettingsMenu.h GameState.h
+SettingsState.o: SettingsState.cpp SettingsState.h SettingsMenu.h GameState.h Context.h
 	$(CXX) $(CXXFLAGS) -c SettingsState.cpp
 
 SettingsMenu.o: SettingsMenu.cpp SettingsMenu.h InputSystem.h
 	$(CXX) $(CXXFLAGS) -c SettingsMenu.cpp
 
-PlayingState.o: PlayingState.cpp PlayingState.h MainMenuState.h GameState.h
+PlayingState.o: PlayingState.cpp PlayingState.h MainMenuState.h GameState.h Context.h
 	$(CXX) $(CXXFLAGS) -c PlayingState.cpp
 
 MenuLabel.o: MenuLabel.cpp MenuLabel.h MainMenu.h

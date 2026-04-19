@@ -31,7 +31,8 @@ private:
 
 public:
     Dropdown(const sf::Font& font, const std::vector<std::string>& options, sf::Vector2f sizeFraction,
-             sf::Color bgColor, sf::Color hvbgColor, sf::Color txColor, sf::Color hvtxColor, sf::Color olColor);
+             sf::Color bgColor, sf::Color hvbgColor, sf::Color txColor, sf::Color hvtxColor, sf::Color olColor,
+             int selectedIndex);
     int getSize();
     bool isOpen();
     std::vector<sf::RectangleShape>& getBoxes();
@@ -44,6 +45,7 @@ public:
     void unhover();
     bool isHovered(sf::Vector2i mousePos) const;
     void select(int index);
+    void setSelectedIndex(int index);
 
     void handleClick(sf::Vector2i mousePos);
     void updateLayout(sf::Vector2u windowSize, float xFrac, float yFrac);

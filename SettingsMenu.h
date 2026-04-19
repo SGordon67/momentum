@@ -47,7 +47,7 @@ private:
     bool m_shouldGoBack = false;
 
 public:
-    SettingsMenu(const sf::Font& font);
+    SettingsMenu(const sf::Font& font, int resolutionIndex, int testIndex);
     bool inDropdown();
     int getDropdownSize();
     int getActiveDropdownIndex();
@@ -59,6 +59,7 @@ public:
     void closeDropdown(int ddIndex);
 
     int getResolutionIndex() const;
+    int getTestIndex() const;
 
     bool shouldGoBack();
 

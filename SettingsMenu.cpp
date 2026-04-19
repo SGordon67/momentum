@@ -1,7 +1,7 @@
 #include "SettingsMenu.h"
 #include <iostream>
 
-SettingsMenu::SettingsMenu(const sf::Font& font)
+SettingsMenu::SettingsMenu(const sf::Font& font, int resolutionIndex, int testIndex)
     : m_title(font, "Settings", m_titleTextColor, m_titleYSizeFraction)
     , m_backButton(font, "Back", {m_settingWidth, m_settingHeight}, m_buttonXMargin, m_buttonYMargin,
                    m_buttonBgColor, m_buttonHvBgColor, m_buttonTextColor, m_buttonHvTextColor, m_buttonOlColor)
@@ -19,8 +19,10 @@ SettingsMenu::SettingsMenu(const sf::Font& font)
     SettingItem resolutionItem = {
         MenuLabel(font, "Resolution", m_buttonTextColor, m_settingHeight),
         Dropdown(font, resolutions, {m_settingWidth, m_settingHeight}
-                 ,m_buttonBgColor, m_buttonHvBgColor, m_buttonTextColor, m_buttonHvTextColor, m_buttonOlColor)
+                 ,m_buttonBgColor, m_buttonHvBgColor, m_buttonTextColor, m_buttonHvTextColor, m_buttonOlColor,
+                 resolutionIndex)
     };
+    resolutionItem.dropdown.setSelectedIndex(resolutionIndex);
     m_settingsItems.push_back(resolutionItem);
 
     std::vector<std::string> testers = {
@@ -30,10 +32,12 @@ SettingsMenu::SettingsMenu(const sf::Font& font)
         "test4"
     };
     SettingItem testItem = {
-        MenuLabel(font, "TESTING", m_buttonTextColor, m_settingHeight),
+        MenuLabel(font, "Testing", m_buttonTextColor, m_settingHeight),
         Dropdown(font, testers, {m_settingWidth, m_settingHeight}
-                 ,m_buttonBgColor, m_buttonHvBgColor, m_buttonTextColor, m_buttonHvTextColor, m_buttonOlColor)
+                 , m_buttonBgColor, m_buttonHvBgColor, m_buttonTextColor, m_buttonHvTextColor, m_buttonOlColor
+                 , testIndex)
     };
+    testItem.dropdown.setSelectedIndex(testIndex);
     m_settingsItems.push_back(testItem);
 }
 bool SettingsMenu::inDropdown(){
@@ -140,6 +144,9 @@ void SettingsMenu::closeDropdown(int ddIndex){
 
 int SettingsMenu::getResolutionIndex() const{
     return m_settingsItems[0].dropdown.getSelectedIndex();
+}
+int SettingsMenu::getTestIndex() const{
+    return m_settingsItems[1].dropdown.getSelectedIndex();
 }
 bool SettingsMenu::shouldGoBack(){
     return m_shouldGoBack;

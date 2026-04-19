@@ -8,6 +8,9 @@ struct Context {
     sf::RenderWindow* window;
     sf::Font* font;
     InputSystem* input;
+
+    int resolutionIndex = 1; // 1440x900
+    int testIndex = 0;
 };
 
 #endif

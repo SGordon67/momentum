@@ -1,12 +1,14 @@
 #include "Dropdown.h"
 
 Dropdown::Dropdown(const sf::Font& font, const std::vector<std::string>& options, sf::Vector2f sizeFraction,
-                   sf::Color bgColor, sf::Color hvbgColor, sf::Color txColor, sf::Color hvtxColor, sf::Color olColor)
+                   sf::Color bgColor, sf::Color hvbgColor, sf::Color txColor, sf::Color hvtxColor, sf::Color olColor,
+                   int selectedIndex)
     : m_mainText(sf::Text(font))
     , m_sizeFraction(sizeFraction)
     , m_bgColor(bgColor), m_hvbgColor(hvbgColor), m_txColor(txColor), m_hvtxColor(hvtxColor), m_olColor(olColor)
 {
     m_mainText.setString(options[0]);
+    // m_mainText.setString(options[selectedIndex]);
 
     for(const auto& opt : options){
         sf::Text text(font);
@@ -16,6 +18,7 @@ Dropdown::Dropdown(const sf::Font& font, const std::vector<std::string>& options
         sf::RectangleShape box;
         m_optionBoxes.push_back(box);
     }
+    // setSelectedIndex(selectedIndex);
 }
 int Dropdown::getSize(){
     return m_optionBoxes.size();
@@ -82,6 +85,12 @@ bool Dropdown::isHovered(sf::Vector2i mousePos) const{
     return false;
 }
 void Dropdown::select(int index){
+    if(index >= 0 && index < static_cast<int>(m_optionBoxes.size())){
+        m_selectedIndex = index;
+        m_mainText.setString(m_optionTexts[index].getString());
+    }
+}
+void Dropdown::setSelectedIndex(int index){
     if(index >= 0 && index < static_cast<int>(m_optionBoxes.size())){
         m_selectedIndex = index;
         m_mainText.setString(m_optionTexts[index].getString());

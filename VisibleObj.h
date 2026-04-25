@@ -9,7 +9,9 @@
 
 #include "enums.h"
 
-class VisibleObj {
+static int numObjects = 0;
+
+class VisibleObj{
 protected:
     int m_objectID;
     RenderLayer m_renderLayer;
@@ -37,6 +39,7 @@ public:
         if(m_sprite.getRotation() >= sf::degrees(360)) m_sprite.setRotation(m_sprite.getRotation() - sf::degrees(360));
         if(m_sprite.getRotation() < sf::degrees(0)) m_sprite.setRotation(m_sprite.getRotation() + sf::degrees(360));
     }
+
     virtual void update();
 	virtual void render(sf::RenderWindow& window);
 };

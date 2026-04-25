@@ -2,12 +2,6 @@
 
 #include "VisibleObj.h"
 
-// int m_objectID;
-// RenderLayer m_renderLayer;
-// sf::Texture* m_texture;
-// sf::IntRect m_spriteRect;
-// sf::Sprite m_sprite;
-
 extern int numObjects;
 
 VisibleObj::VisibleObj(sf::Vector2f position, sf::Vector2i size, sf::Angle rotation, RenderLayer renderLayer, sf::Texture* texture)
@@ -24,5 +18,6 @@ VisibleObj::VisibleObj(sf::Vector2f position, sf::Vector2i size, sf::Angle rotat
 }
 void VisibleObj::update(){
 }
-void VisibleObj::render([[maybe_unused]] sf::RenderWindow& window){
+void VisibleObj::render(sf::RenderWindow& window){
+    window.draw(m_sprite);
 }

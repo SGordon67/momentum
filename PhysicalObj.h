@@ -3,7 +3,7 @@
 
 #include "VisibleObj.h"
 
-class PhysicalObj : VisibleObj {
+class PhysicalObj : public VisibleObj{
 protected:
 public:
     PhysicalObj(sf::Vector2f position, sf::Vector2i size, sf::Angle rotation, RenderLayer renderLayer, sf::Texture* texture);

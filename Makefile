@@ -6,7 +6,7 @@ CXXFLAGS += -I$(SFML_DIR)/include
 LDFLAGS = -L$(SFML_DIR)/lib
 LIBS = -lsfml-graphics -lsfml-window -lsfml-system
 
-OBJS = main.o InputSystem.o MainMenuState.o MainMenu.o SettingsState.o SettingsMenu.o PlayingState.o MenuLabel.o MenuButton.o Dropdown.o VisibleObj.o PhysicalObj.o Player.o
+OBJS = main.o InputSystem.o MainMenuState.o MainMenu.o SettingsState.o SettingsMenu.o PlayingState.o MenuLabel.o MenuButton.o Dropdown.o VisibleObj.o PhysicalObj.o Entity.o Player.o
 all: main
 
 main: $(OBJS)
@@ -48,7 +48,10 @@ VisibleObj.o: VisibleObj.cpp VisibleObj.h enums.h
 PhysicalObj.o: PhysicalObj.cpp PhysicalObj.h VisibleObj.h enums.h
 	$(CXX) $(CXXFLAGS) -c PhysicalObj.cpp
 
-Player.o: Player.cpp Player.h PhysicalObj.h enums.h
+Entity.o: Entity.cpp Entity.h PhysicalObj.h enums.h
+	$(CXX) $(CXXFLAGS) -c Entity.cpp
+
+Player.o: Player.cpp Player.h Entity.h enums.h
 	$(CXX) $(CXXFLAGS) -c Player.cpp
 
 clean:

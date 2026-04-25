@@ -1,10 +1,14 @@
 #ifndef PLAYINGSTATE_H
 #define PLAYINGSTATE_H
 
+#include "Player.h"
 #include "GameState.h"
 
 class PlayingState : public GameState {
 private:
+    Player player;
+    std::vector<std::unique_ptr<VisibleObj>> visualObjs;
+    std::vector<std::shared_ptr<PhysicalObj>> physicalObjs;
     std::unique_ptr<GameState> m_nextState;
 public:
     PlayingState(Context& context);

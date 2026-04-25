@@ -9,6 +9,7 @@ private:
     // default values
     static constexpr sf::Vector2f d_playerPosition = {900, 500};
     static constexpr sf::Vector2i d_playerSize = {0, 0};
+    static constexpr sf::Angle d_playerAngle = sf::degrees(90.f);
     static constexpr int d_playerMass = 10;
     static constexpr float d_playerRadius = d_playerSize.x/2.f;
     static constexpr sf::Vector2f d_playerVelocity = {0, 0};
@@ -23,7 +24,7 @@ private:
 
     static constexpr float d_playerAngularAcceleration = (4.f * (M_PI / 180.f));
 public:
-    Player();
+    Player(sf::Texture* texture);
     Player(sf::Vector2f position, sf::Vector2i size, sf::Angle rotation, RenderLayer renderLayer, sf::Texture* texture, int maxHP);
 
     virtual void update();

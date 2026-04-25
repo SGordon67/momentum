@@ -5,8 +5,13 @@
 #include "MainMenuState.h"
 
 PlayingState::PlayingState(Context& context)
-    : GameState(context)
+    : GameState(context),
+    m_player(&playerTexture)
 {
+    if(!playerTexture.loadFromFile("art/playerSprite1.png")) {
+        std::cout << "Sprite not loaded :(" << std::endl;
+    }
+    m_player = Player(&playerTexture);
 }
 void PlayingState::handleEvent(const sf::Event& event){
     auto& window = *context.window;
@@ -29,7 +34,6 @@ std::unique_ptr<GameState> PlayingState::update([[maybe_unused]] float dt){
     if(m_nextState){
         return std::move(m_nextState);
     }
-
     return nullptr;
 }
 

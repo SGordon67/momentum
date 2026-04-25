@@ -1,5 +1,6 @@
 #include "PhysicalObj.h"
 
+// INHERITED FROM VISIBLEOBJ
 // int m_objectID;
 // RenderLayer m_renderLayer;
 // sf::Texture* m_texture;
@@ -12,5 +13,6 @@ PhysicalObj::PhysicalObj(sf::Vector2f position, sf::Vector2i size, sf::Angle rot
 }
 void PhysicalObj::update(){
 }
-void PhysicalObj::render([[maybe_unused]] sf::RenderWindow& window){
+void PhysicalObj::render(sf::RenderWindow& window){
+    window.draw(m_sprite);
 }

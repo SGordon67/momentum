@@ -23,9 +23,6 @@ sf::Vector2u gameViewSize{500, 500};
 // world
 sf::Vector2i worldSize{4096, 4096};
 
-// game
-int numObjects = 0;
-
 // playerView
 sf::Vector2f viewSize{static_cast<float>(windowSize.x), static_cast<float>(windowSize.y)};
 

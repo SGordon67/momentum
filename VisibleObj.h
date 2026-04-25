@@ -18,9 +18,16 @@ protected:
     sf::Texture* m_texture;
     sf::IntRect m_spriteRect;
     sf::Sprite m_sprite;
+
+    // physical attributes
+    sf::Vector2f m_velocity = {0, 0};
+    float m_acceleration = 5000;
+    float m_angularVelocity = 0;
+    float m_maxVelocity = 500;
 public:
     VisibleObj(sf::Vector2f position, sf::Vector2i size, sf::Angle rotation, RenderLayer renderLayer, sf::Texture* texture);
 
+    int getNumObjects() { return numObjects; }
     int getObjectID() const { return m_objectID; }
     RenderLayer getRenderLayer() const { return m_renderLayer; }
     sf::Texture* getTexture() { return m_texture; }

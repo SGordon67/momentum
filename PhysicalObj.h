@@ -5,6 +5,9 @@
 
 class PhysicalObj : public VisibleObj{
 protected:
+    float m_mass = 10;
+    float m_radius = 10; // for collisions
+    float m_dragCoef = 4;
 public:
     PhysicalObj(sf::Vector2f position, sf::Vector2i size, sf::Angle rotation, RenderLayer renderLayer, sf::Texture* texture);
 

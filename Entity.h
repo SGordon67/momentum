@@ -13,7 +13,8 @@ protected:
     std::vector<VisibleObj> visuals;
 public:
     Entity(sf::Vector2f position, sf::Vector2i size, sf::Angle rotation, RenderLayer renderLayer, sf::Texture* texture,
-                float maxVelocity, float acceleration, sf::Angle angularVelocity, int maxHP);
+           float maxVelocity, float acceleration, sf::Angle angularVelocity, int maxHP,
+           float mass, float radius, float drag);
     // Entity(sf::Vector2f position, sf::Vector2i size, sf::Angle rotation, RenderLayer renderLayer, sf::Texture* texture, int maxHP);
 
 	int getHP() const { return m_hp; }

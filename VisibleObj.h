@@ -21,8 +21,8 @@ protected:
 
     // physical attributes (visible objs can move too)
     sf::Vector2f m_velocity = {0, 0};
-    float m_acceleration = 0;
     float m_maxVelocity = 500;
+    float m_acceleration = 0;
     sf::Angle m_angularVelocity = sf::degrees(0);
 public:
     VisibleObj(sf::Vector2f position, sf::Vector2i size, sf::Angle rotation, RenderLayer renderLayer, sf::Texture* texture,

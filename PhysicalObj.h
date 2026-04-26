@@ -10,7 +10,8 @@ protected:
     float m_dragCoef = 4;
 public:
     PhysicalObj(sf::Vector2f position, sf::Vector2i size, sf::Angle rotation, RenderLayer renderLayer, sf::Texture* texture,
-                float maxVelocity, float acceleration, sf::Angle angularVelocity);
+                float maxVelocity, float acceleration, sf::Angle angularVelocity,
+                float mass, float radius, float drag);
 
     float getMass() { return m_mass; }
     float getRadius() { return m_radius; }

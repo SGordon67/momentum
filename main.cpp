@@ -26,6 +26,19 @@ sf::Vector2i worldSize{4096, 4096};
 // playerView
 sf::Vector2f viewSize{static_cast<float>(windowSize.x), static_cast<float>(windowSize.y)};
 
+// column-major matrix multiplication
+sf::Glsl::Mat3 multiply(const sf::Glsl::Mat3& a, const sf::Glsl::Mat3& b){
+    sf::Glsl::Mat3 res = sf::Glsl::Mat3({0, 0, 0, 0, 0, 0, 0, 0, 0});
+    for(int col = 0; col < 3; col++)
+        for(int row = 0; row < 3; row++){
+            res.array[col*3 + row] =
+                a.array[0*3 + row] * b.array[col*3 + 0] +
+                a.array[1*3 + row] * b.array[col*3 + 1] +
+                a.array[2*3 + row] * b.array[col*3 + 2];
+        }
+    return res;
+}
+
 void initializeTextures(){
     // if (!testFont.openFromFile("Fonts/Tanklager-Kompakt.ttf")){
     if (!testFont.openFromFile("Fonts/Tanklager-Original.ttf")){
@@ -101,7 +114,7 @@ int main(){
         }
 
         // update the game
-        // also potential state transition
+        // also handle state transitions
         auto newState = gameState->update(FixedDeltaTime);
         if(newState){
             gameState = std::move(newState);

@@ -3,11 +3,13 @@
 #include "Entity.h"
 
 Entity::Entity(sf::Vector2f position, sf::Vector2i size, sf::Angle rotation, RenderLayer renderLayer, sf::Texture* texture,
-               float maxVelocity, float acceleration, sf::Angle angularVelocity, int maxHP)
-    : PhysicalObj(position, size, rotation, renderLayer, texture, maxVelocity, acceleration, angularVelocity)
+               float maxVelocity, float acceleration, sf::Angle angularVelocity, int maxHP,
+               float mass, float radius, float drag)
+    : PhysicalObj(position, size, rotation, renderLayer, texture, maxVelocity, acceleration, angularVelocity, mass, radius, drag)
     , m_hp(maxHP)
     , m_maxHP(maxHP)
-    , m_markedForDeath(false){
+    , m_markedForDeath(false)
+{
 }
 void Entity::reduceHealth(int damage){
     // m_visualObjects->push_back(std::make_unique<DamageNum>(getPosition(), damage));

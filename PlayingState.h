@@ -12,7 +12,6 @@ private:
     sf::View m_playingView;
     sf::Vector2f m_basePlayingViewSize{500.f, 500.f};
 
-    sf::Vector2u m_playViewSize{256, 256};
     sf::Vector2u m_worldSize{2048, 2048};
 
     std::vector<std::unique_ptr<VisibleObj>> m_visualObjs;

@@ -16,8 +16,12 @@
 // float m_dragCoef = 4;
 
 PhysicalObj::PhysicalObj(sf::Vector2f position, sf::Vector2i size, sf::Angle rotation, RenderLayer renderLayer, sf::Texture* texture,
-                         float maxVelocity, float acceleration, sf::Angle angularVelocity)
-: VisibleObj(position, size, rotation, renderLayer, texture, maxVelocity, acceleration, angularVelocity)
+                         float maxVelocity, float acceleration, sf::Angle angularVelocity,
+                         float mass, float radius, float drag)
+    : VisibleObj(position, size, rotation, renderLayer, texture, maxVelocity, acceleration, angularVelocity),
+    m_mass(mass),
+    m_radius(radius),
+    m_dragCoef(drag)
 {
 }
 
@@ -35,8 +39,8 @@ void PhysicalObj::addAccelerationForce(sf::Vector2f &currentVelocity, float acce
 
     sf::Vector2f fAccel = {0, 0};
     if (acceleration != 0){
-        fAccel.x = (-acceleration / mass) * std::cos(dir.asRadians()) * dt;
-        fAccel.y = (-acceleration / mass) * std::sin(dir.asRadians()) * dt;
+        fAccel.x = (acceleration / mass) * std::cos(dir.asRadians()) * dt;
+        fAccel.y = (acceleration / mass) * std::sin(dir.asRadians()) * dt;
     }
     sf::Vector2f newVelocity = {currentVelocity.x + fAccel.x,
         currentVelocity.y + fAccel.y};

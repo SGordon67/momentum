@@ -49,18 +49,17 @@ void VisibleObj::updateVelocity(sf::Angle dir, float acceleration, float dt)
     float maxXVelocity = m_maxVelocity * std::abs(std::cos(direction.asRadians()));
     float maxYVelocity = m_maxVelocity * std::abs(std::sin(direction.asRadians()));
     sf::Vector2f accel = {0, 0};
-    if (m_acceleration != 0)
-    {
-        accel.x = (-m_acceleration) * std::cos(direction.asRadians()) * dt;
-        accel.y = (-m_acceleration) * std::sin(direction.asRadians()) * dt;
+    if(m_acceleration != 0){
+        accel.x = acceleration * std::cos(direction.asRadians()) * dt;
+        accel.y = acceleration * std::sin(direction.asRadians()) * dt;
     }
     sf::Vector2f newVelocity = {getVelocity().x + accel.x,
         getVelocity().y + accel.y};
 
     // make sure we don't go over the directional maxVelocity
-    if (std::abs(newVelocity.x) <= maxXVelocity)
+    if(std::abs(newVelocity.x) <= maxXVelocity)
         m_velocity.x = newVelocity.x;
-    if (std::abs(newVelocity.y) <= maxYVelocity)
+    if(std::abs(newVelocity.y) <= maxYVelocity)
         m_velocity.y = newVelocity.y;
 }
 void VisibleObj::update(float dt){

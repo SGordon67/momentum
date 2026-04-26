@@ -34,8 +34,7 @@ private:
     // constexpr static const float m_buttonYMargin = 0.75f; // size of text within button
 public:
     Dropdown(const sf::Font& font, const std::vector<std::string>& options, sf::Vector2f sizeFraction, float buttonXMargin, float buttonYMargin,
-             sf::Color bgColor, sf::Color hvbgColor, sf::Color txColor, sf::Color hvtxColor, sf::Color olColor,
-             int selectedIndex);
+             sf::Color bgColor, sf::Color hvbgColor, sf::Color txColor, sf::Color hvtxColor, sf::Color olColor);
     int getSize();
     bool isOpen();
     std::vector<sf::RectangleShape>& getBoxes();

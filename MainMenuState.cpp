@@ -50,9 +50,19 @@ void MainMenuState::handleEvent(const sf::Event& event){
 }
 
 std::unique_ptr<GameState> MainMenuState::update([[maybe_unused]] float dt){
+    // correct the resolution if needed.
+    context.window->setPosition({10, 10});
+    sf::View uiView(
+        {context.window->getSize().x / 2.f, context.window->getSize().y / 2.f},
+        {static_cast<float>(context.window->getSize().x), static_cast<float>(context.window->getSize().y)}
+    );
+    context.window->setView(uiView);
     m_mainMenu.updateLayout(context.window->getSize());
+
+    // update the menu
     m_mainMenu.update(sf::Mouse::getPosition(*context.window), *context.input);
 
+    // gather and process the current inputs
     if(context.input->isNewlyPressed(Button::Escape)){
         context.window->close();
     }
@@ -60,10 +70,10 @@ std::unique_ptr<GameState> MainMenuState::update([[maybe_unused]] float dt){
         makeSelection();
     }
 
+    // change states if needed
     if(m_nextState){
         return std::move(m_nextState);
     }
-
     return nullptr;
 }
 

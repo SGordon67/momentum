@@ -17,8 +17,7 @@ SettingsMenu::SettingsMenu(const sf::Font& font, int resolutionIndex, int testIn
     SettingItem resolutionItem = {
         MenuLabel(font, "Resolution", m_buttonTextColor, m_settingHeight),
         Dropdown(font, resolutions, {m_settingWidth, m_settingHeight}, m_buttonXMargin, m_buttonYMargin,
-                 m_buttonBgColor, m_buttonHvBgColor, m_buttonTextColor, m_buttonHvTextColor, m_buttonOlColor,
-                 resolutionIndex)
+                 m_buttonBgColor, m_buttonHvBgColor, m_buttonTextColor, m_buttonHvTextColor, m_buttonOlColor)
     };
     resolutionItem.dropdown.setSelectedIndex(resolutionIndex);
     m_settingsItems.push_back(resolutionItem);
@@ -32,8 +31,7 @@ SettingsMenu::SettingsMenu(const sf::Font& font, int resolutionIndex, int testIn
     SettingItem testItem = {
         MenuLabel(font, "Testing", m_buttonTextColor, m_settingHeight),
         Dropdown(font, testers, {m_settingWidth, m_settingHeight}, m_buttonXMargin, m_buttonYMargin,
-                 m_buttonBgColor, m_buttonHvBgColor, m_buttonTextColor, m_buttonHvTextColor, m_buttonOlColor,
-                 testIndex)
+                 m_buttonBgColor, m_buttonHvBgColor, m_buttonTextColor, m_buttonHvTextColor, m_buttonOlColor)
     };
     testItem.dropdown.setSelectedIndex(testIndex);
     m_settingsItems.push_back(testItem);

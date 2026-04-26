@@ -2,8 +2,9 @@
 
 #include "Entity.h"
 
-Entity::Entity(sf::Vector2f position, sf::Vector2i size, sf::Angle rotation, RenderLayer renderLayer, sf::Texture* texture, int maxHP)
-    : PhysicalObj(position, size, rotation, renderLayer, texture)
+Entity::Entity(sf::Vector2f position, sf::Vector2i size, sf::Angle rotation, RenderLayer renderLayer, sf::Texture* texture,
+               float maxVelocity, float acceleration, sf::Angle angularVelocity, int maxHP)
+    : PhysicalObj(position, size, rotation, renderLayer, texture, maxVelocity, acceleration, angularVelocity)
     , m_hp(maxHP)
     , m_maxHP(maxHP)
     , m_markedForDeath(false){
@@ -23,7 +24,9 @@ void Entity::increaseHealth(int heal){
     std::cout << "HEALED, NEW HP -- " << getHP() << std::endl;
 }
 
-void Entity::update(){
+void Entity::updateVelocity(sf::Angle dir, float acceleration, float dt){
+}
+void Entity::update(float dt){
 }
 void Entity::render(sf::RenderWindow& window){
     window.draw(m_sprite);

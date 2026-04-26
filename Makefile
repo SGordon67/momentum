@@ -51,7 +51,7 @@ PhysicalObj.o: PhysicalObj.cpp PhysicalObj.h VisibleObj.h enums.h
 Entity.o: Entity.cpp Entity.h PhysicalObj.h enums.h
 	$(CXX) $(CXXFLAGS) -c Entity.cpp
 
-Player.o: Player.cpp Player.h Entity.h enums.h
+Player.o: Player.cpp Player.h Entity.h InputSystem.h enums.h
 	$(CXX) $(CXXFLAGS) -c Player.cpp
 
 clean:

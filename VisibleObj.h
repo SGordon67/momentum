@@ -19,13 +19,14 @@ protected:
     sf::IntRect m_spriteRect;
     sf::Sprite m_sprite;
 
-    // physical attributes
+    // physical attributes (visible objs can move too)
     sf::Vector2f m_velocity = {0, 0};
-    float m_acceleration = 5000;
-    float m_angularVelocity = 0;
+    float m_acceleration = 0;
     float m_maxVelocity = 500;
+    sf::Angle m_angularVelocity = sf::degrees(0);
 public:
-    VisibleObj(sf::Vector2f position, sf::Vector2i size, sf::Angle rotation, RenderLayer renderLayer, sf::Texture* texture);
+    VisibleObj(sf::Vector2f position, sf::Vector2i size, sf::Angle rotation, RenderLayer renderLayer, sf::Texture* texture,
+               float maxVelocity, float acceleration, sf::Angle angularVelocity);
 
     int getNumObjects() { return numObjects; }
     int getObjectID() const { return m_objectID; }
@@ -33,21 +34,31 @@ public:
     sf::Texture* getTexture() { return m_texture; }
     sf::IntRect getRect() { return m_spriteRect; }
     sf::Sprite getSprite() { return m_sprite; }
+    void setRenderLayer(RenderLayer layer) { m_renderLayer = layer; }
 
     sf::Vector2f getPosition() { return m_sprite.getPosition(); }
+    sf::Vector2f getSize() { return m_sprite.getLocalBounds().size; }
     sf::Vector2f getScale() { return m_sprite.getScale(); }
     sf::Angle getRotation() { return m_sprite.getRotation(); }
-
     void setPosition(sf::Vector2f position) { m_sprite.setPosition(position); }
-    void setRenderLayer(RenderLayer layer) { m_renderLayer = layer; }
     void setRotation(sf::Angle rotation) { m_sprite.setRotation(rotation); }
+
+    sf::Vector2f getVelocity() { return m_velocity; }
+    float getAcceleration() { return m_acceleration; }
+    sf::Angle getAngularVelocity() { return m_angularVelocity; }
+    float getMaxVelocity() { return m_maxVelocity; }
+    void setVelocity(sf::Vector2f velocity) { m_velocity = velocity; }
+
     void rotate(const sf::Angle rotation) {
         m_sprite.rotate(rotation);
         if(m_sprite.getRotation() >= sf::degrees(360)) m_sprite.setRotation(m_sprite.getRotation() - sf::degrees(360));
         if(m_sprite.getRotation() < sf::degrees(0)) m_sprite.setRotation(m_sprite.getRotation() + sf::degrees(360));
     }
 
-    virtual void update();
+    void updatePosition(float dt);
+
+    virtual void updateVelocity(sf::Angle dir, float acceleration, float dt);
+    virtual void update(float dt);
 	virtual void render(sf::RenderWindow& window);
 };
 

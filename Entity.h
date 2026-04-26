@@ -12,7 +12,9 @@ protected:
     bool m_markedForDeath;
     std::vector<VisibleObj> visuals;
 public:
-    Entity(sf::Vector2f position, sf::Vector2i size, sf::Angle rotation, RenderLayer renderLayer, sf::Texture* texture, int maxHP);
+    Entity(sf::Vector2f position, sf::Vector2i size, sf::Angle rotation, RenderLayer renderLayer, sf::Texture* texture,
+                float maxVelocity, float acceleration, sf::Angle angularVelocity, int maxHP);
+    // Entity(sf::Vector2f position, sf::Vector2i size, sf::Angle rotation, RenderLayer renderLayer, sf::Texture* texture, int maxHP);
 
 	int getHP() const { return m_hp; }
     void setHP(int hp){ m_hp = hp; }
@@ -25,8 +27,9 @@ public:
 	void reduceHealth(int damage);
 	void increaseHealth(int heal);
 
-    virtual void update();
-    virtual void render(sf::RenderWindow& window);
+    virtual void updateVelocity(sf::Angle dir, float acceleration, float dt) override;
+    virtual void update(float dt) override;
+    virtual void render(sf::RenderWindow& window) override;
 };
 
 #endif

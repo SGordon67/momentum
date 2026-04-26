@@ -5,15 +5,14 @@
 extern void centerTextInBox(sf::Text& text, const sf::RectangleShape& box, float xMargin, float yMargin);
 
 Dropdown::Dropdown(const sf::Font& font, const std::vector<std::string>& options, sf::Vector2f sizeFraction, float buttonXMargin, float buttonYMargin,
-                   sf::Color bgColor, sf::Color hvbgColor, sf::Color txColor, sf::Color hvtxColor, sf::Color olColor,
-                   int selectedIndex)
+                   sf::Color bgColor, sf::Color hvbgColor, sf::Color txColor, sf::Color hvtxColor, sf::Color olColor)
     : m_mainText(sf::Text(font))
     , m_sizeFraction(sizeFraction)
     , m_buttonYMargin(buttonYMargin)
+    , m_buttonXMargin(buttonXMargin)
     , m_bgColor(bgColor), m_hvbgColor(hvbgColor), m_txColor(txColor), m_hvtxColor(hvtxColor), m_olColor(olColor)
 {
     m_mainText.setString(options[0]);
-    // m_mainText.setString(options[selectedIndex]);
 
     for(const auto& opt : options){
         sf::Text text(font);
@@ -23,12 +22,10 @@ Dropdown::Dropdown(const sf::Font& font, const std::vector<std::string>& options
         sf::RectangleShape box;
         m_optionBoxes.push_back(box);
     }
-    // setSelectedIndex(selectedIndex);
 }
 int Dropdown::getSize(){
     return m_optionBoxes.size();
 }
-// 0 if closed, number of options if open
 bool Dropdown::isOpen(){
     return m_isOpen;
 }
